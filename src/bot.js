@@ -42,14 +42,14 @@ client.on('message', async (message) => {
     // console.log(`[${message.author.tag}] typed: ${message.content}`);
     else{
         const arr = message.content.toLowerCase().split(' ');
-        arr.forEach(m => {
-            if(cuss.m > 0){
+        for(let i = 0; i < arr.length; i++){
+            if(cuss.arr[i] > 0){
                 message.delete();
                 message.channel.send('Message deleted...');
                 message.author.reply('You used a prohibited word...');
                 return;
             }
-        });
+        };
         if(message.content.toLowerCase().split(' ').includes('hello')) message.reply('Hello there!'); //message.channel.send('...')
     }
 });
