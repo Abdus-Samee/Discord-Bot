@@ -1,5 +1,6 @@
 require('dotenv').config();
-var cuss = require('cuss');
+
+const foul = ['fuck', 'sex', 'bitch', 'idiot', 'sexy', 'asshole', 'baal', 'kuttarbaccha', 'whore', 'dick', 'nigga', 'bastard', 'cunt', 'f*ck', 'choad', 'bal', 'heda', 'kutta', 'shuwor', 'shuor', 'shag', 'madari', 'madarchod', 'sudani', 'khanki', 'pussy', 'twat', 'prick', 'bugger'];
 
 const { Client, WebhookClient } = require('discord.js');
 const client = new Client();
@@ -38,19 +39,17 @@ client.on('message', async (message) => {
             webhookClient.send(msg);
         }
     }
-    // console.log(message.author.id)
-    // console.log(`[${message.author.tag}] typed: ${message.content}`);
     else{
         const arr = message.content.toLowerCase().split(' ');
         for(let i = 0; i < arr.length; i++){
-            if(cuss.arr[i] > 0){
+            if(foul.includes(arr[i].toLowerCase())){
                 message.delete();
                 message.channel.send('Message deleted...');
-                message.author.reply('You used a prohibited word...');
+                message.reply('You used a prohibited word...');
                 return;
             }
-        };
-        if(message.content.toLowerCase().split(' ').includes('hello')) message.reply('Hello there!'); //message.channel.send('...')
+        } 
+        if(message.content.toLowerCase().split(' ').includes('hello')) message.reply('Hello there!');//message.channel.send('...')
     }
 });
 
