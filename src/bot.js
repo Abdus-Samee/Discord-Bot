@@ -1,4 +1,5 @@
 require('dotenv').config();
+var cuss = require('cuss');
 
 const { Client, WebhookClient } = require('discord.js');
 const client = new Client();
@@ -15,7 +16,7 @@ const webhookClient = new WebhookClient(
 
 client.on('message', async (message) => {
     if(message.author.bot) return;
-    if(message.content.startsWith(PREFIX)){
+    else if(message.content.startsWith(PREFIX)){
         const [cmd_name, ...args] = message.content.trim().substring(PREFIX.length).split(/\s+/);
         if(cmd_name == 'kick'){
             if(!message.member.hasPermission('KICK_MEMBERS')) return message.reply("You don't have the permission to kick...");
@@ -37,9 +38,20 @@ client.on('message', async (message) => {
             webhookClient.send(msg);
         }
     }
-    console.log(message.author.id)
+    // console.log(message.author.id)
     // console.log(`[${message.author.tag}] typed: ${message.content}`);
-    if(message.content.toLowerCase().split(' ').includes('hello')) message.reply('Hello there!'); //message.channel.send('...')
+    else{
+        const arr = message.content.toLowerCase().split(' ');
+        arr.forEach(m => {
+            if(cuss.m > 0){
+                message.delete();
+                message.channel.send('Message deleted...');
+                message.author.reply('You used a prohibited word...');
+                return;
+            }
+        });
+        if(message.content.toLowerCase().split(' ').includes('hello')) message.reply('Hello there!'); //message.channel.send('...')
+    }
 });
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
